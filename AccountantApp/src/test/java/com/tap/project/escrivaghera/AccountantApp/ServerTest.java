@@ -10,7 +10,7 @@ public class ServerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		myServer = new Server();
+		myServer = new Server(null);
 	}
 
 	@Test

@@ -6,10 +6,12 @@ import java.util.List;
 public class Server {
 	private List<Session> sessionList;
 	private int currentSession;
+	private Database db;
 	
-	public Server(){
+	public Server(Database database){
 		sessionList=new ArrayList<Session>();
 		currentSession=0;
+		db=database;
 	}
 	
 	public Session getSession(User user) {
@@ -23,4 +25,7 @@ public class Server {
 		return sessionList;
 	}
 
+	public Database getDb() {
+		return db;
+	}
 }
