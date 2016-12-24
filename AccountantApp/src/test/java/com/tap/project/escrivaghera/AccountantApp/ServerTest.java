@@ -56,7 +56,7 @@ public class ServerTest {
 		Session mySession2=createSession("2");
 		mySession1.addDescription("delete record with id 0001");
 		mySession2.addDescription("modify record with id 0002");
-		String description=myServer.getSessionDescription();
+		String description=myServer.getSessionsDescription();
 		String expected="They have made this anctions on the database:\n";
 		expected=expected +"The user 1 test test makes this actions:\nIn the session 1, the user 1 test test "
 				+ "delete record with id 0001\n\n";
