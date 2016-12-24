@@ -36,4 +36,9 @@ public class Session {
 		}
 		return sessionDescription;
 	}
+
+	public int getSessionId() {
+		return id;
+	}
+
 }

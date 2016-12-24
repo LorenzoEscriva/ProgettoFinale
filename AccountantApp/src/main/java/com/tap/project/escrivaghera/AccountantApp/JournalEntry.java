@@ -35,6 +35,5 @@ public class JournalEntry {
 					"The total of counts is several, the difference between the left count and the right count is: "
 							+ (countleft - countright));
 		this.listOfCount = list;
-	}
-
+  }
 }
