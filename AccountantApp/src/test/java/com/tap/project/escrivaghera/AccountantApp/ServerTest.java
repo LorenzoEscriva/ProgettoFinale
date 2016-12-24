@@ -49,4 +49,19 @@ public class ServerTest {
 				+ "delete record with id 0001\n";
 		assertEquals(expected, description);
 	}
+	
+	@Test
+	public void testGetSessionsDescription(){
+		Session mySession1=createSession("1");
+		Session mySession2=createSession("2");
+		mySession1.addDescription("delete record with id 0001");
+		mySession2.addDescription("modify record with id 0002");
+		String description=myServer.getSessionDescription();
+		String expected="They have made this anctions on the database:\n";
+		expected=expected +"The user 1 test test makes this actions:\nIn the session 1, the user 1 test test "
+				+ "delete record with id 0001\n\n";
+		expected=expected +"The user 2 test test makes this actions:\nIn the session 2, the user 2 test test "
+				+ "modify record with id 0002\n\n";
+		assertEquals(expected, description);
+	}
 }

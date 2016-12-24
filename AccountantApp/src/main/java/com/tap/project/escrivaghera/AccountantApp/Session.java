@@ -38,7 +38,6 @@ public class Session {
 	}
 
 	public int getSessionId() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 }
