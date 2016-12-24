@@ -2,7 +2,6 @@ package com.tap.project.escrivaghera.AccountantApp;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,7 +40,7 @@ public class SessionTest {
 
 		String expected = "The user " + myuser.toString() + " makes this actions:\nIn the session 1, the user "
 				+ myuser.toString() + " " + action1 + "\nIn the session 1, the user " + myuser.toString() + " "
-				+ action2+"\n";
+				+ action2 + "\n";
 		assertTrue(expected.equals(mysession.toString()));
 	}
 }
