@@ -18,7 +18,7 @@ public class Session {
 	}
 
 	public void addDescription(String action) {
-		String actionDescription=new String("In the session "+ id+ ", the user "+ user.toString() +action);
+		String actionDescription=new String("In the session "+ id+ ", the user "+ user.toString() +" "+ action);
 		LOGGER.info(actionDescription);
 		userActions.add(actionDescription);
 	}
