@@ -19,9 +19,8 @@ public class Server {
 		return session;
 	}
 
-	public int getListSize() {
-		// TODO Auto-generated method stub
-		return sessionList.size();
+	public List<Session> getList() {
+		return sessionList;
 	}
 
 }
