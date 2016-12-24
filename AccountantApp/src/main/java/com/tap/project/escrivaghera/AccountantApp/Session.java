@@ -1,6 +1,7 @@
 package com.tap.project.escrivaghera.AccountantApp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -26,5 +27,13 @@ public class Session {
 	public List<String> getList() {
 		return userActions;
 	}
-
+	
+	public String toString(){
+		String sessionDescription = "The user " + user.toString() + " makes this actions:\n";
+		Iterator<String> actionit=userActions.iterator();
+		while(actionit.hasNext()){
+			sessionDescription=sessionDescription+actionit.next()+ "\n";
+		}
+		return sessionDescription;
+	}
 }
