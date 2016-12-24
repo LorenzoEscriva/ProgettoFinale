@@ -25,6 +25,8 @@ public class JournalEntryTest {
 		List<Count> list = new ArrayList<Count>();
 		Count count1 = new Count("count1", false);
 		Count count2 = new Count("count2", true);
+		count1.setValue(1200);
+		count2.setValue(1200);
 		list.add(count1);
 		list.add(count2);
 		myJournalEntry.setListOfCount(list);
@@ -35,7 +37,9 @@ public class JournalEntryTest {
 	public void setListOfCountTestExceptionCase() throws IllegalJournalEntryException {
 		List<Count> list = new ArrayList<Count>();
 		Count count1 = new Count("count1", true);
-		Count count2 = new Count("count2", true);
+		Count count2 = new Count("count2", false);
+		count1.setValue(1200);
+		count2.setValue(1100);
 		list.add(count1);
 		list.add(count2);
 		myJournalEntry.setListOfCount(list);

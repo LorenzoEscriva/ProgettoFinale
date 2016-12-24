@@ -22,16 +22,18 @@ public class JournalEntry {
 	}
 
 	public void setListOfCount(List<Count> list) throws IllegalJournalEntryException {
-		int countleft = 0, countright = 0;
+		double countleft = 0, countright = 0;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).isLeft == true) {
-				countleft++;
+				countleft = countleft + list.get(i).value;
 			} else {
-				countright++;
+				countright = countright + list.get(i).value;
 			}
 		}
 		if (countleft != countright)
-			throw new IllegalJournalEntryException("The total of counts is several");
+			throw new IllegalJournalEntryException(
+					"The total of counts is several, the difference between the left count and the right count is: "
+							+ (countleft - countright));
 		this.listOfCount = list;
 	}
 
