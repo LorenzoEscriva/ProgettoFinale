@@ -11,4 +11,12 @@ public class AccountantApp {
 		mySession=null;
 	}
 
+	public Session getMySession() {
+		return mySession;
+	}
+
+	public void authenticate(User anUser) {
+		mySession=myServer.getSession(anUser);
+	}
+
 }

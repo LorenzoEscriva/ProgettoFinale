@@ -18,8 +18,10 @@ public class AccountantAppTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAuthenticatedMethod() {
+		User user =new User("1", "test", "test");
+		myAccountantApp.authenticate(user);
+		assertNotNull(myAccountantApp.getMySession());
 	}
 
 }
