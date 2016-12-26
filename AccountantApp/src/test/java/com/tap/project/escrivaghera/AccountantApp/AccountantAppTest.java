@@ -41,7 +41,7 @@ public class AccountantAppTest {
 	}
 	
 	@Test
-	public void testCreateJournalEntryWithNadListOfCounts(){
+	public void testCreateJournalEntryWithGoodListOfCounts(){
 		myAccountantApp.authenticate(user);
 		ArrayList<Count> myCounts=createTestList(1200.0, 1200.0);
 		assertNotNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
