@@ -39,6 +39,13 @@ public class AccountantAppTest {
 		ArrayList<Count> myCounts = createTestList(1200.0, 1100.0);
 		assertNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
 	}
+	
+	@Test
+	public void testCreateJournalEntryWithNadListOfCounts(){
+		myAccountantApp.authenticate(user);
+		ArrayList<Count> myCounts=createTestList(1200.0, 1200.0);
+		assertNotNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
+	}
 
 	public ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts=new ArrayList<Count>();
