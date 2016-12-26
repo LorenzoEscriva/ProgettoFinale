@@ -23,5 +23,9 @@ public class AccountantAppTest {
 		myAccountantApp.authenticate(user);
 		assertNotNull(myAccountantApp.getMySession());
 	}
-
+	
+	@Test(expected=NotAuthenticationException.class)
+	public void testCreateJournalEntryWithoutAuthentication(){
+		
+	}
 }
