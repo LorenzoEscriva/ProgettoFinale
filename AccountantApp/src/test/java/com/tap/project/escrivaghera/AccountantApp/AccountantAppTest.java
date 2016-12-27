@@ -17,6 +17,7 @@ public class AccountantAppTest {
 	private AccountantApp myAccountantApp;
 	private Database db;
 	private User user;
+	private int lengthOfUserActions;
 
 	@Before
 	public void setUp() throws Exception {
@@ -73,10 +74,16 @@ public class AccountantAppTest {
 
 	@Test
 	public void testGetAllRegistrationInteractionWithDB() {
-		myAccountantApp.authenticate(user);
+		autheticationAndSettingLength();
 		Date date1 = new Date(), date2 = new Date();
 		myAccountantApp.getAllRegistration(date1, date2);
+		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
 		verify(db).getAllRegistration(date1, date2);
+	}
+
+	private void autheticationAndSettingLength() {
+		myAccountantApp.authenticate(user);
+		lengthOfUserActions = myAccountantApp.getMySession().getList().size();
 	}
 
 	@Test
@@ -102,26 +109,29 @@ public class AccountantAppTest {
 
 	@Test
 	public void testAddInteractionWithDB() {
-		myAccountantApp.authenticate(user);
+		autheticationAndSettingLength();
 		JournalEntry test = new JournalEntry("1",
 				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
 		myAccountantApp.add(test);
+		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
 		verify(db).add(test);
 	}
 
 	@Test
 	public void testModifyInteractionWithDB() {
-		myAccountantApp.authenticate(user);
+		autheticationAndSettingLength();
 		JournalEntry test = new JournalEntry("1",
 				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
 		myAccountantApp.modify("2", test);
+		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
 		verify(db).modify("2", test);
 	}
 
 	@Test
 	public void testDeleteInteractionWithDB() {
-		myAccountantApp.authenticate(user);
+		autheticationAndSettingLength();
 		myAccountantApp.delete("1");
+		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
 		verify(db).delete("1");
 	}
 
