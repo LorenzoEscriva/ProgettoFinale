@@ -23,6 +23,11 @@ public class JournalEntryTest {
 	}
 
 	@Test
+	public void testThatGetIdDoNotReturnAnObject(){
+		assertTrue(myJournalEntry.getId().equals("id1"));
+	}
+	
+	@Test
 	public void setListOfCountTestGoodCase() throws IllegalJournalEntryException {
 		List<Count> list = new ArrayList<Count>();
 		Count count1 = new Count("count1", false);
