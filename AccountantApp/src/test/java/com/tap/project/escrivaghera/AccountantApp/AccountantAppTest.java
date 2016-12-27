@@ -49,31 +49,24 @@ public class AccountantAppTest {
 	}
 
 	@Test(expected = NotAuthenticationException.class)
-	public void testAddJournalEntryWithoutAuthentication() { // questo è una
-																// ripetizione
-																// di codice,
-																// una volta
-																// verificato
-																// potremmo
-																// anche
-																// ometterlo per
-																// gli altri
-																// metodi;
+	public void testAddJournalEntryWithoutAuthentication() {
 		myAccountantApp.add(new JournalEntry("1", new Date()));
 	}
 
-	@Test
-	public void testAddJournalEntry() {
-		myAccountantApp.authenticate(user);
-		myAccountantApp.add(new JournalEntry("1", new Date()));
-		assertNotNull(db.getAllRegistration(new Date(), new Date()));
+	@Test(expected = NotAuthenticationException.class)
+	public void testModifyJournalEntryWithoutAuthentication() {
+		myAccountantApp.modify("1", new JournalEntry("2", new Date()));
 	}
 
-//	@Test
-//	public void testModifyJournalEntry() {
-//		myAccountantApp.authenticate(user);
-//		myAccountantApp.modify("1", new JournalEntry("2", new Date()));
-//	}
+	@Test(expected = NotAuthenticationException.class)
+	public void testDeleteJournalEntryWithoutAuthentication() {
+		myAccountantApp.delete(null);
+	}
+
+	@Test(expected = NotAuthenticationException.class)
+	public void testGetAllRegistrationJournalEntryWithoutAuthentication() {
+		myAccountantApp.getAllRegistration(new Date(), new Date());
+	}
 
 	public ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts = new ArrayList<Count>();

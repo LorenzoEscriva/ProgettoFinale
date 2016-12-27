@@ -43,32 +43,27 @@ public class AccountantApp {
 		if (mySession == null)
 			throw new NotAuthenticationException();
 		myDB.add(newEntry);
-		String addJournalEntry = new String("Adds the journal entry with id " + newEntry.getId());
-		LOGGER.info(addJournalEntry);
+		mySession.addDescription("adds the journal entry with id " + newEntry.getId());
 	}
 
 	public void modify(String id, JournalEntry changeEntry) {
 		if (mySession == null)
 			throw new NotAuthenticationException();
 		myDB.modify(id, changeEntry);
-		String modifyJournalEntry = new String("Changes the journal entry with id " + id);
-		LOGGER.info(modifyJournalEntry);
+		mySession.addDescription("changes the journal entry with id " + id);
 	}
 
 	public void delete(String id) {
 		if (mySession == null)
 			throw new NotAuthenticationException();
 		myDB.delete(id);
-		String deleteJournalEntry = new String("Deletes the journal entry with id " + id);
-		LOGGER.info(deleteJournalEntry);
+		mySession.addDescription("deletes the journal entry with id " + id);
 	}
 
 	public List<JournalEntry> getAllRegistration(Date date1, Date date2) {
 		if (mySession == null)
 			throw new NotAuthenticationException();
-		String getListJournalEntry = new String(
-				"Takes all journal entry between " + date1.toString() + " and " + date2.toString());
-		LOGGER.info(getListJournalEntry);
+		mySession.addDescription("takes all journal entry between " + date1.toString() + " and " + date2.toString());
 		return myDB.getAllRegistration(date1, date2);
 	}
 
