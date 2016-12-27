@@ -68,6 +68,12 @@ public class AccountantAppTest {
 		myAccountantApp.getAllRegistration(new Date(), new Date());
 	}
 
+	@Test
+	public void testGetAllRegistration() {
+		myAccountantApp.authenticate(user);
+		assertNotNull(myAccountantApp.getAllRegistration(new Date(), new Date()));
+	}
+
 	public ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts = new ArrayList<Count>();
 		Count count = new Count("count1", true);
