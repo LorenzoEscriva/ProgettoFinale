@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.tap.project.escrivaghera.AccountantApp.exception.*;
+
 public class AccountantApp {
 
 	private Session mySession;

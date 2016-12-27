@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.tap.project.escrivaghera.AccountantApp.exception.*;
+
 public class JournalEntry {
 
 	private String Id;
