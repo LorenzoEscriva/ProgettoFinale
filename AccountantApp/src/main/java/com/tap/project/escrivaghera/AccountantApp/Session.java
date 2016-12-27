@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class Session {
+
 	private int id;
 	private User user;
 	private List<String> userActions;
