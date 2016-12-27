@@ -73,43 +73,69 @@ public class AccountantAppTest {
 	@Test
 	public void testGetAllRegistrationInteractionWithDB() {
 		myAccountantApp.authenticate(user);
-		Date date1=new Date(), date2=new Date();
+		Date date1 = new Date(), date2 = new Date();
 		myAccountantApp.getAllRegistration(date1, date2);
 		verify(db).getAllRegistration(date1, date2);
 	}
-	
+
 	@Test
-	public void testGetAllRegistractionWithOneElement() throws IllegalJournalEntryException{
+	public void testGetAllRegistractionWithOneElement() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(user);
 		Date[] dates = createDates();
-		List<JournalEntry> returnList=new ArrayList<JournalEntry>();
+		List<JournalEntry> returnList = new ArrayList<JournalEntry>();
 		createJournalEntry(returnList);
 		when(db.getAllRegistration(dates[0], dates[1])).thenReturn(returnList);
 		assertEquals(1, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
 	}
 
-	private Date[] createDates() {
-		Date[] dates=new Date[2];
-		dates[0]=new Date(new GregorianCalendar(1900+116, 10, 1).getTimeInMillis());
-		dates[1]=new Date(new GregorianCalendar(1900+116, 11, 1).getTimeInMillis());
-		return dates;
-	}
-
-	private void createJournalEntry(List<JournalEntry> returnList) throws IllegalJournalEntryException {
-		JournalEntry entry=new JournalEntry("1", new Date(new GregorianCalendar(1900+116, 11, 10).getTimeInMillis()));
-		entry.setListOfCount(createTestList(1200.0, 1200.0));
-		returnList.add(entry);
-	}
-	
 	@Test
-	public void testGetAllRegistractionWithMoreElement() throws IllegalJournalEntryException{
+	public void testGetAllRegistractionWithMoreElement() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(user);
-		Date[] dates=createDates();
-		List<JournalEntry> returnList=new ArrayList<JournalEntry>();
+		Date[] dates = createDates();
+		List<JournalEntry> returnList = new ArrayList<JournalEntry>();
 		createJournalEntry(returnList);
 		createJournalEntry(returnList);
 		when(db.getAllRegistration(dates[0], dates[1])).thenReturn(returnList);
 		assertEquals(2, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testAddInteractionWithDB() {
+		myAccountantApp.authenticate(user);
+		JournalEntry test = new JournalEntry("1",
+				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
+		myAccountantApp.add(test);
+		verify(db).add(test);
+	}
+
+	@Test
+	public void testModifyInteractionWithDB() {
+		myAccountantApp.authenticate(user);
+		JournalEntry test = new JournalEntry("1",
+				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
+		myAccountantApp.modify("2", test);
+		verify(db).modify("2", test);
+	}
+
+	@Test
+	public void testDeleteInteractionWithDB() {
+		myAccountantApp.authenticate(user);
+		myAccountantApp.delete("1");
+		verify(db).delete("1");
+	}
+
+	private Date[] createDates() {
+		Date[] dates = new Date[2];
+		dates[0] = new Date(new GregorianCalendar(1900 + 116, 10, 1).getTimeInMillis());
+		dates[1] = new Date(new GregorianCalendar(1900 + 116, 11, 1).getTimeInMillis());
+		return dates;
+	}
+
+	private void createJournalEntry(List<JournalEntry> returnList) throws IllegalJournalEntryException {
+		JournalEntry entry = new JournalEntry("1",
+				new Date(new GregorianCalendar(1900 + 116, 11, 10).getTimeInMillis()));
+		entry.setListOfCount(createTestList(1200.0, 1200.0));
+		returnList.add(entry);
 	}
 
 	private ArrayList<Count> createTestList(double leftValue, double rightValue) {
