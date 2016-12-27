@@ -30,10 +30,10 @@ public class JournalEntry {
 	public void setListOfCount(List<Count> list) throws IllegalJournalEntryException {
 		double countleft = 0, countright = 0;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).isLeft == true) {
-				countleft = countleft + list.get(i).value;
+			if (list.get(i).isLeft() == true) {
+				countleft = countleft + list.get(i).getValue();
 			} else {
-				countright = countright + list.get(i).value;
+				countright = countright + list.get(i).getValue();
 			}
 		}
 		if (countleft != countright)

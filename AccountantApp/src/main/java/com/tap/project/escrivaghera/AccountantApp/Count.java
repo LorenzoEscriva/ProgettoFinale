@@ -2,9 +2,9 @@ package com.tap.project.escrivaghera.AccountantApp;
 
 public class Count {
 
-	String description;
-	boolean isLeft;
-	double value;
+	private String description;
+	private boolean isLeft;
+	private double value;
 
 	public Count(String description, boolean isLeft) {
 		this.description = description;
@@ -15,4 +15,15 @@ public class Count {
 		this.value = value;
 	}
 
+	public boolean isLeft() {
+		return isLeft;
+	}
+
+	public double getValue() {
+		return value;
+	}
+
+	public void setLeft(boolean isLeft) {
+		this.isLeft = isLeft;
+	}
 }
