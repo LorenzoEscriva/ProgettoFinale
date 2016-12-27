@@ -69,10 +69,14 @@ public class AccountantAppTest {
 	}
 
 	@Test
-	public void testGetAllRegistration() {
+	public void testGetAllRegistrationInteractionWithDB() {
 		myAccountantApp.authenticate(user);
-		assertNotNull(myAccountantApp.getAllRegistration(new Date(), new Date()));
+		Date date1=new Date(), date2=new Date();
+		myAccountantApp.getAllRegistration(date1, date2);
+		verify(db).getAllRegistration(date1, date2);
 	}
+	
+	
 
 	public ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts = new ArrayList<Count>();
