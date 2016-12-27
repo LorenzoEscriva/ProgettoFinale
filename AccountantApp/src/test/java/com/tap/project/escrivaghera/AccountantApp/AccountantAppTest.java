@@ -5,6 +5,8 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,12 +71,48 @@ public class AccountantAppTest {
 	}
 
 	@Test
-	public void testGetAllRegistration() {
+	public void testGetAllRegistrationInteractionWithDB() {
 		myAccountantApp.authenticate(user);
-		assertNotNull(myAccountantApp.getAllRegistration(new Date(), new Date()));
+		Date date1=new Date(), date2=new Date();
+		myAccountantApp.getAllRegistration(date1, date2);
+		verify(db).getAllRegistration(date1, date2);
+	}
+	
+	@Test
+	public void testGetAllRegistractionWithOneElement() throws IllegalJournalEntryException{
+		myAccountantApp.authenticate(user);
+		Date[] dates = createDates();
+		List<JournalEntry> returnList=new ArrayList<JournalEntry>();
+		createJournalEntry(returnList);
+		when(db.getAllRegistration(dates[0], dates[1])).thenReturn(returnList);
+		assertEquals(1, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
 	}
 
-	public ArrayList<Count> createTestList(double leftValue, double rightValue) {
+	private Date[] createDates() {
+		Date[] dates=new Date[2];
+		dates[0]=new Date(new GregorianCalendar(1900+116, 10, 1).getTimeInMillis());
+		dates[1]=new Date(new GregorianCalendar(1900+116, 11, 1).getTimeInMillis());
+		return dates;
+	}
+
+	private void createJournalEntry(List<JournalEntry> returnList) throws IllegalJournalEntryException {
+		JournalEntry entry=new JournalEntry("1", new Date(new GregorianCalendar(1900+116, 11, 10).getTimeInMillis()));
+		entry.setListOfCount(createTestList(1200.0, 1200.0));
+		returnList.add(entry);
+	}
+	
+	@Test
+	public void testGetAllRegistractionWithMoreElement() throws IllegalJournalEntryException{
+		myAccountantApp.authenticate(user);
+		Date[] dates=createDates();
+		List<JournalEntry> returnList=new ArrayList<JournalEntry>();
+		createJournalEntry(returnList);
+		createJournalEntry(returnList);
+		when(db.getAllRegistration(dates[0], dates[1])).thenReturn(returnList);
+		assertEquals(2, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	private ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts = new ArrayList<Count>();
 		Count count = new Count("count1", true);
 		count.setValue(leftValue);
