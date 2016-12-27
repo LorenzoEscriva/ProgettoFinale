@@ -22,8 +22,4 @@ public class Count {
 	public double getValue() {
 		return value;
 	}
-
-	public void setLeft(boolean isLeft) {
-		this.isLeft = isLeft;
-	}
 }
