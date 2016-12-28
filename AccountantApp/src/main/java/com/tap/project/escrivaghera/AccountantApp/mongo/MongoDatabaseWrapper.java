@@ -1,7 +1,9 @@
 package com.tap.project.escrivaghera.AccountantApp.mongo;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -9,11 +11,13 @@ import java.util.List;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.tap.project.escrivaghera.AccountantApp.Count;
 import com.tap.project.escrivaghera.AccountantApp.Database;
 import com.tap.project.escrivaghera.AccountantApp.JournalEntry;
+import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryException;
 
 public class MongoDatabaseWrapper implements Database {
 	private DBCollection accountingRecords;
@@ -52,8 +56,66 @@ public class MongoDatabaseWrapper implements Database {
 
 	@Override
 	public List<JournalEntry> getAllRegistration(Date date1, Date date2) {
-		// TODO Auto-generated method stub
-		return null;
+		List<JournalEntry> listOfJournalEntry=new ArrayList<JournalEntry>();
+		
+		return getAllRegistration(listOfJournalEntry);
+	}
+
+	private List<JournalEntry> getAllRegistration(List<JournalEntry> listOfJournalEntry) {
+		DBCursor cursor=accountingRecords.find();
+		List<DBObject> myCursorIterator=cursor.toArray();
+		int i=0;
+		while(i<myCursorIterator.size()){
+			DBObject newJournalEntryCursor=myCursorIterator.get(i);
+			String idJournalEntry=(String)newJournalEntryCursor.get("id");
+			String dateJournalEntry=(String)newJournalEntryCursor.get("date");
+			try {
+				Date date = convertStringToDate(dateJournalEntry);
+				JournalEntry newEntry=new JournalEntry(idJournalEntry, date);
+				
+				List<Count> counts =new ArrayList<Count>();
+				Count count = extractCount(newJournalEntryCursor);
+				counts.add(count);
+				
+				int k=0;
+				boolean exit=false;
+				while(i+1<myCursorIterator.size() && !exit){
+					i=i+1;
+					DBObject newCountCursor=myCursorIterator.get(i);
+					String idNextRecord=(String)newCountCursor.get("id");
+					if(idNextRecord.equals(idJournalEntry)){
+						count=extractCount(newCountCursor);
+						counts.add(count);
+						System.out.println(idNextRecord+ " "+ idJournalEntry+ " "+ idNextRecord.equals(idJournalEntry)+ " "+ k++);
+					} else{ 
+						exit=true;
+						i=i-1;
+					}
+				}
+				newEntry.setListOfCount(counts);
+				listOfJournalEntry.add(newEntry);
+			} catch (ParseException | IllegalJournalEntryException e) {
+				e.printStackTrace();
+				return null;
+			}
+			i=i+1;
+		}
+		return listOfJournalEntry;
+	}
+
+	public Count extractCount(DBObject countCursor) {
+		String elementDescription =(String) countCursor.get("description");
+		boolean elementIsLeft=new Boolean((String)countCursor.get("isLeft"));
+		Count count=new Count(elementDescription, elementIsLeft);
+		double elementValue=(Double)countCursor.get("value");
+		count.setValue(elementValue);
+		return count;
+	}
+
+	private Date convertStringToDate(String dateJournalEntry) throws ParseException {
+		SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+		Date date=formatter.parse(dateJournalEntry);
+		return date;
 	}
 	
 

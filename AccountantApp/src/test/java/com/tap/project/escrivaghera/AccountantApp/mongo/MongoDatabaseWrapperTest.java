@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,31 +38,31 @@ public class MongoDatabaseWrapperTest {
 
 	@Test
 	public void testAddIsSaved() throws IllegalJournalEntryException {
-		JournalEntry entry = createJournalEntry(1200.0, 1200.0);
+		JournalEntry entry = createJournalEntry("1", 1200.0, 1200.0);
 		
 		mongoDatabase.add(entry);
 		assertTrue(containRecord(entry));
 	}
 
-	private JournalEntry createJournalEntry(double leftValue, double rigthValue) throws IllegalJournalEntryException {
+	private JournalEntry createJournalEntry(String id, double leftValue, double rightValue) throws IllegalJournalEntryException {
 		Date date = new Date();
-		JournalEntry entry =new JournalEntry("1",date);
-		List<Count> myCounts=createTestList(leftValue, rigthValue);
+		JournalEntry entry =new JournalEntry(id,date);
+		List<Count> myCounts=createTestList(leftValue, rightValue);
 		entry.setListOfCount(myCounts);
 		return entry;
 	}
 	
 	@Test
 	public void testModify() throws IllegalJournalEntryException{
-		JournalEntry myEntry = addRecord();
-		JournalEntry modify =createJournalEntry(1300.0, 1300.0);
+		JournalEntry myEntry = addRecord("1", 1200.0, 1200.0);
+		JournalEntry modify =createJournalEntry("1", 1300.0, 1300.0);
 		mongoDatabase.modify("1", modify);
 		assertFalse(containRecord(myEntry));
 		assertTrue(containRecord(modify));		
 	}
 
-	public JournalEntry addRecord() throws IllegalJournalEntryException {
-		JournalEntry myEntry=createJournalEntry(1200.0, 1200.0);
+	private JournalEntry addRecord(String id, double leftValue, double rightValue) throws IllegalJournalEntryException {
+		JournalEntry myEntry=createJournalEntry(id, leftValue, rightValue);
 		Iterator<BasicDBObject> records=myEntry.toListOfBasicDBObject().iterator();
 		while(records.hasNext()){
 			accountingRecords.insert(records.next());
@@ -71,8 +72,29 @@ public class MongoDatabaseWrapperTest {
 	
 	@Test
 	public void testDelete() throws IllegalJournalEntryException{
-		addRecord();
+		addRecord("1", 1200.0, 1200.0);
 		assertEquals(2, mongoDatabase.delete("1"));
+	}
+	
+	@Test
+	public void testGetAllRegistractionsEmpty(){
+		Date[] dates=createDates();
+		assertTrue(mongoDatabase.getAllRegistration(dates[0], dates[1]).isEmpty());
+	}
+	
+	@Test
+	public void testGetAllRegistractionNotEmpty() throws IllegalJournalEntryException{
+		Date[] dates=createDates();
+		addRecord("1", 1200.0, 1200.0);
+		addRecord("2", 1300.0, 1300.0);
+		assertEquals(2, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
+	}
+	
+	private Date[] createDates() {
+		Date[] dates = new Date[2];
+		dates[0] = new Date(new GregorianCalendar(1900 + 116, 11, 1).getTimeInMillis());
+		dates[1] = new Date(new GregorianCalendar(1900 + 116, 11, 31).getTimeInMillis());
+		return dates;
 	}
 
 	private boolean containRecord(JournalEntry entry) {
