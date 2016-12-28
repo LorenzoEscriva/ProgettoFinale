@@ -103,6 +103,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.14.3</version>
+		</dependency>
+		<dependency>
 			<groupId> com.github.fakemongo</groupId>
 			<artifactId>fongo</artifactId>
 			<version>1.6.5</version>
