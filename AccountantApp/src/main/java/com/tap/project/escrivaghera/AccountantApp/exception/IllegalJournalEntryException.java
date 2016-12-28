@@ -1,4 +1,4 @@
-package com.tap.project.escrivaghera.AccountantApp;
+package com.tap.project.escrivaghera.AccountantApp.exception;
 
 public class IllegalJournalEntryException extends Exception {
 

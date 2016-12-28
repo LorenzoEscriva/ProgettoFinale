@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.tap.project.escrivaghera.AccountantApp.exception.*;
+
 public class AccountantApp {
 
 	private Session mySession;
@@ -33,7 +35,7 @@ public class AccountantApp {
 		try {
 			newJournalEntry.setListOfCount(listOfCounts);
 		} catch (IllegalJournalEntryException e) {
-			LOGGER.error("Exception happen!", e);
+			LOGGER.error("EXCEPTION "+e.getMessage());
 			return null;
 		}
 		return newJournalEntry;
