@@ -90,6 +90,23 @@ public class MongoDatabaseWrapperTest {
 		assertEquals(2, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
 	}
 	
+	@Test
+	public void testGetAllRegistractionWithOneRegistractionNotIncluded() throws IllegalJournalEntryException{
+		Date[] dates=createDates();
+		addRecord("1", 1200.0, 1200.0);
+		addRecord("2", 1300.0, 1300.0);
+		List<Count> myCount=createTestList(1500.0, 1500.0);
+		JournalEntry entry =new JournalEntry("3",new Date(new GregorianCalendar(1900 + 116, 10, 1).getTimeInMillis()));
+		entry.setListOfCount(myCount);
+		Iterator<BasicDBObject> records=entry.toListOfBasicDBObject().iterator();
+		while(records.hasNext()){
+			accountingRecords.insert(records.next());
+		}
+		
+		assertEquals(2, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
+	
+	}
+	
 	private Date[] createDates() {
 		Date[] dates = new Date[2];
 		dates[0] = new Date(new GregorianCalendar(1900 + 116, 11, 1).getTimeInMillis());
