@@ -37,18 +37,45 @@ public class MongoDatabaseWrapperTest {
 
 	@Test
 	public void testAddIsSaved() throws IllegalJournalEntryException {
-		Date date = new Date();
-		JournalEntry entry =new JournalEntry("1",date);
-		List<Count> myCounts=createTestList(1200.0, 1200.0);
-		entry.setListOfCount(myCounts);
+		JournalEntry entry = createJournalEntry(1200.0, 1200.0);
 		
 		mongoDatabase.add(entry);
-		assertTrue(containsRecord(entry));
+		assertTrue(containRecord(entry));
+	}
+
+	private JournalEntry createJournalEntry(double leftValue, double rigthValue) throws IllegalJournalEntryException {
+		Date date = new Date();
+		JournalEntry entry =new JournalEntry("1",date);
+		List<Count> myCounts=createTestList(leftValue, rigthValue);
+		entry.setListOfCount(myCounts);
+		return entry;
 	}
 	
+	@Test
+	public void testModify() throws IllegalJournalEntryException{
+		JournalEntry myEntry = addRecord();
+		JournalEntry modify =createJournalEntry(1300.0, 1300.0);
+		mongoDatabase.modify("1", modify);
+		assertFalse(containRecord(myEntry));
+		assertTrue(containRecord(modify));		
+	}
 
+	public JournalEntry addRecord() throws IllegalJournalEntryException {
+		JournalEntry myEntry=createJournalEntry(1200.0, 1200.0);
+		Iterator<BasicDBObject> records=myEntry.toListOfBasicDBObject().iterator();
+		while(records.hasNext()){
+			accountingRecords.insert(records.next());
+		}
+		return myEntry;
+	}
+	
+	@Test
+	public void testDelete() throws IllegalJournalEntryException{
+		addRecord();
+		assertEquals(2, mongoDatabase.delete("1"));
+	}
 
-	private boolean containsRecord(JournalEntry entry) {
+	private boolean containRecord(JournalEntry entry) {
 		boolean find=true;
 		Iterator<BasicDBObject> records=entry.toListOfBasicDBObject().iterator();
 		while(records.hasNext() && find){
