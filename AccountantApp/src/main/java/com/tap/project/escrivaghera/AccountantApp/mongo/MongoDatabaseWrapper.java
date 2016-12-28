@@ -76,8 +76,7 @@ public class MongoDatabaseWrapper implements Database {
 				List<Count> counts =new ArrayList<Count>();
 				Count count = extractCount(newJournalEntryCursor);
 				counts.add(count);
-				
-				int k=0;
+
 				boolean exit=false;
 				while(i+1<myCursorIterator.size() && !exit){
 					i=i+1;
@@ -86,7 +85,6 @@ public class MongoDatabaseWrapper implements Database {
 					if(idNextRecord.equals(idJournalEntry)){
 						count=extractCount(newCountCursor);
 						counts.add(count);
-						System.out.println(idNextRecord+ " "+ idJournalEntry+ " "+ idNextRecord.equals(idJournalEntry)+ " "+ k++);
 					} else{ 
 						exit=true;
 						i=i-1;
@@ -95,7 +93,6 @@ public class MongoDatabaseWrapper implements Database {
 				newEntry.setListOfCount(counts);
 				listOfJournalEntry.add(newEntry);
 			} catch (ParseException | IllegalJournalEntryException e) {
-				e.printStackTrace();
 				return null;
 			}
 			i=i+1;
