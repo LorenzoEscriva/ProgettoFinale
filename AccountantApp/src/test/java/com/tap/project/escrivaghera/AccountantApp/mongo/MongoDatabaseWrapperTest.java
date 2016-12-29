@@ -107,6 +107,19 @@ public class MongoDatabaseWrapperTest {
 	
 	}
 	
+	@Test
+	public void testGetAllRegistractionWithLostRecord() throws IllegalJournalEntryException{
+		Date[] dates = createDates();
+		JournalEntry myEntry=createJournalEntry("1", 1200.0, 1200.0);
+		List<BasicDBObject> myListOfRecord=myEntry.toListOfBasicDBObject();
+		Iterator<BasicDBObject> records=myListOfRecord.iterator();
+		while(records.hasNext()){
+			accountingRecords.insert(records.next());
+		}
+		accountingRecords.remove(myListOfRecord.get(0));
+		assertNull(mongoDatabase.getAllRegistration(dates[0], dates[1]));
+	}
+	
 	private Date[] createDates() {
 		Date[] dates = new Date[2];
 		dates[0] = new Date(new GregorianCalendar(1900 + 116, 11, 1).getTimeInMillis());
