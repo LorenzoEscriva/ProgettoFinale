@@ -77,13 +77,8 @@ public class AccountantAppTest {
 		autheticationAndSettingLength();
 		Date date1 = new Date(), date2 = new Date();
 		myAccountantApp.getAllRegistration(date1, date2);
-		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
+		assertEquals(lengthOfUserActions + 1, myAccountantApp.getMySession().getList().size());
 		verify(db).getAllRegistration(date1, date2);
-	}
-
-	private void autheticationAndSettingLength() {
-		myAccountantApp.authenticate(user);
-		lengthOfUserActions = myAccountantApp.getMySession().getList().size();
 	}
 
 	@Test
@@ -113,7 +108,7 @@ public class AccountantAppTest {
 		JournalEntry test = new JournalEntry("1",
 				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
 		myAccountantApp.add(test);
-		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
+		assertEquals(lengthOfUserActions + 1, myAccountantApp.getMySession().getList().size());
 		verify(db).add(test);
 	}
 
@@ -123,7 +118,7 @@ public class AccountantAppTest {
 		JournalEntry test = new JournalEntry("1",
 				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
 		myAccountantApp.modify("2", test);
-		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
+		assertEquals(lengthOfUserActions + 1, myAccountantApp.getMySession().getList().size());
 		verify(db).modify("2", test);
 	}
 
@@ -131,8 +126,13 @@ public class AccountantAppTest {
 	public void testDeleteInteractionWithDB() {
 		autheticationAndSettingLength();
 		myAccountantApp.delete("1");
-		assertEquals(lengthOfUserActions+1, myAccountantApp.getMySession().getList().size());
+		assertEquals(lengthOfUserActions + 1, myAccountantApp.getMySession().getList().size());
 		verify(db).delete("1");
+	}
+
+	private void autheticationAndSettingLength() {
+		myAccountantApp.authenticate(user);
+		lengthOfUserActions = myAccountantApp.getMySession().getList().size();
 	}
 
 	private Date[] createDates() {

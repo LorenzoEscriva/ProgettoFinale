@@ -24,7 +24,6 @@ public class Count {
 	}
 
 	public String getDescrizione() {
-		// TODO Auto-generated method stub
 		return description;
 	}
 }

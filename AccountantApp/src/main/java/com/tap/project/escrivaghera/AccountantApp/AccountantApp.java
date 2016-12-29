@@ -35,7 +35,7 @@ public class AccountantApp {
 		try {
 			newJournalEntry.setListOfCount(listOfCounts);
 		} catch (IllegalJournalEntryException e) {
-			LOGGER.error("EXCEPTION "+e.getMessage());
+			LOGGER.error("EXCEPTION " + e.getMessage());
 			return null;
 		}
 		return newJournalEntry;
