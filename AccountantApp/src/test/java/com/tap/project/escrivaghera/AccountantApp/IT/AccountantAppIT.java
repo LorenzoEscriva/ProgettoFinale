@@ -1,7 +1,8 @@
 package com.tap.project.escrivaghera.AccountantApp.IT;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -11,6 +12,7 @@ import org.junit.Test;
 import com.github.fakemongo.Fongo;
 import com.mongodb.MongoClient;
 import com.tap.project.escrivaghera.AccountantApp.AccountantApp;
+import com.tap.project.escrivaghera.AccountantApp.Count;
 import com.tap.project.escrivaghera.AccountantApp.JournalEntry;
 import com.tap.project.escrivaghera.AccountantApp.Server;
 import com.tap.project.escrivaghera.AccountantApp.User;
@@ -33,12 +35,56 @@ public class AccountantAppIT {
 	}
 
 	@Test
-	public void testAddJournalEntryIT() {
+	public void testAddIT() {
 		myAccountantApp.authenticate(myUser);
-		JournalEntry testEntry = new JournalEntry("1",
-				new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis()));
+		Date[] dates = createDates();
+		JournalEntry testEntry = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1100, 1100));
 		myAccountantApp.add(testEntry);
-		assertNotNull(myDB.getAllRegistration());
+		assertEquals(1, myDB.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testModifyIT() {
+		myAccountantApp.authenticate(myUser);
+		Date[] dates = createDates();
+		JournalEntry testEntry1 = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1100, 1100));
+		JournalEntry testEntry2 = myAccountantApp.createJournalEntry("2", dates[0], createTestList(1200, 1200));
+		myAccountantApp.add(testEntry1);
+		myAccountantApp.modify("1", testEntry2);
+		assertEquals(1, myDB.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testDeleteIT() {
+		myAccountantApp.authenticate(myUser);
+		Date[] dates = createDates();
+		JournalEntry testEntry = myAccountantApp.createJournalEntry("4", dates[0], createTestList(1300, 1300));
+		myAccountantApp.add(testEntry);
+		myAccountantApp.delete("4");
+		assertEquals(0, myDB.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testGetAllRegistrationIT() {
+		// implemento dopo pranzo, scusami.
+	}
+
+	private Date[] createDates() {
+		Date[] dates = new Date[2];
+		dates[0] = new Date(new GregorianCalendar(1910 + 100, 11, 10).getTimeInMillis());
+		dates[1] = new Date(new GregorianCalendar(1910 + 100, 11, 11).getTimeInMillis());
+		return dates;
+	}
+
+	private ArrayList<Count> createTestList(double leftValue, double rightValue) {
+		ArrayList<Count> myCounts = new ArrayList<Count>();
+		Count count = new Count("count1", true);
+		count.setValue(leftValue);
+		myCounts.add(count);
+		count = new Count("count2", false);
+		count.setValue(rightValue);
+		myCounts.add(count);
+		return myCounts;
 	}
 
 }

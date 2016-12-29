@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
 import com.tap.project.escrivaghera.AccountantApp.exception.*;
 
 import org.junit.Before;
@@ -24,10 +23,10 @@ public class JournalEntryTest {
 	}
 
 	@Test
-	public void testThatGetIdDoNotReturnAnObject(){
+	public void testThatGetIdDoNotReturnAnObject() {
 		assertTrue(myJournalEntry.getId().equals("id1"));
 	}
-	
+
 	@Test
 	public void setListOfCountTestGoodCase() throws IllegalJournalEntryException {
 		List<Count> list = createTestList(1200.0, 1200.0);
@@ -42,18 +41,19 @@ public class JournalEntryTest {
 			myJournalEntry.setListOfCount(list);
 			fail("should not go here");
 		} catch (IllegalJournalEntryException e) {
-			assertTrue(e.getLocalizedMessage().equals("The total of counts is several, the difference between the left count and the right count is: 100.0"));
+			assertTrue(e.getLocalizedMessage().equals(
+					"The total of counts is several, the difference between the left count and the right count is: 100.0"));
 		}
 	}
-	
+
 	@Test
-	public void testToListOfBasicDBObject() throws IllegalJournalEntryException{
+	public void testToListOfBasicDBObject() throws IllegalJournalEntryException {
 		List<Count> list = createTestList(1200.0, 1200.0);
 		myJournalEntry.setListOfCount(list);
-		
+
 		assertEquals(2, myJournalEntry.toListOfBasicDBObject().size());
 	}
-	
+
 	private ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts = new ArrayList<Count>();
 		Count count = new Count("count1", true);

@@ -53,25 +53,25 @@ public class JournalEntry {
 	}
 
 	public List<BasicDBObject> toListOfBasicDBObject() {
-		List<BasicDBObject> listBasicDBObject=new ArrayList<BasicDBObject>();
-		String entryDate=convertDateIntoString(date);
-		Iterator<Count> countit=listOfCount.iterator();
-		while(countit.hasNext()){
-			BasicDBObject record=new BasicDBObject();
-			Count count =countit.next();
+		List<BasicDBObject> listBasicDBObject = new ArrayList<BasicDBObject>();
+		String entryDate = convertDateIntoString(date);
+		Iterator<Count> countit = listOfCount.iterator();
+		while (countit.hasNext()) {
+			BasicDBObject record = new BasicDBObject();
+			Count count = countit.next();
 			record.put("id", Id);
 			record.put("date", entryDate);
 			record.put("description", count.getDescrizione());
 			record.put("value", count.getValue());
-			record.put("isLeft", new String(count.isLeft()+""));
+			record.put("isLeft", new String(count.isLeft() + ""));
 			listBasicDBObject.add(record);
 		}
 		return listBasicDBObject;
 	}
-	
+
 	private String convertDateIntoString(Date date) {
-		DateFormat df=new SimpleDateFormat("dd/MM/yyyy");
-		String entryDate=df.format(date);
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		String entryDate = df.format(date);
 		return entryDate;
 	}
 }
