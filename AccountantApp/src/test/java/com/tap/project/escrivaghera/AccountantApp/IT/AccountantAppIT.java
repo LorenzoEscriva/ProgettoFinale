@@ -39,7 +39,7 @@ public class AccountantAppIT {
 		myAccountantApp.authenticate(myUser);
 		Date[] dates = createDates();
 		JournalEntry testEntry = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1100, 1100));
-		myAccountantApp.add(testEntry);
+		myDB.add(testEntry);
 		assertEquals(1, myDB.getAllRegistration(dates[0], dates[1]).size());
 	}
 
@@ -49,8 +49,8 @@ public class AccountantAppIT {
 		Date[] dates = createDates();
 		JournalEntry testEntry1 = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1100, 1100));
 		JournalEntry testEntry2 = myAccountantApp.createJournalEntry("2", dates[0], createTestList(1200, 1200));
-		myAccountantApp.add(testEntry1);
-		myAccountantApp.modify("1", testEntry2);
+		myDB.add(testEntry1);
+		myDB.modify("1", testEntry2);
 		assertEquals(1, myDB.getAllRegistration(dates[0], dates[1]).size());
 	}
 
@@ -59,14 +59,57 @@ public class AccountantAppIT {
 		myAccountantApp.authenticate(myUser);
 		Date[] dates = createDates();
 		JournalEntry testEntry = myAccountantApp.createJournalEntry("4", dates[0], createTestList(1300, 1300));
-		myAccountantApp.add(testEntry);
-		myAccountantApp.delete("4");
+		myDB.add(testEntry);
+		myDB.delete("4");
 		assertEquals(0, myDB.getAllRegistration(dates[0], dates[1]).size());
 	}
 
 	@Test
-	public void testGetAllRegistrationIT() {
-		// implemento dopo pranzo, scusami.
+	public void testGetAllRegistrationITOneElement() {
+		myAccountantApp.authenticate(myUser);
+		Date[] dates = createDates();
+		JournalEntry testEntry = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1300, 1300));
+		myDB.add(testEntry);
+		assertEquals(1, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testGetAllRegistrationITMoreElements() {
+		myAccountantApp.authenticate(myUser);
+		Date[] dates = createDates();
+		JournalEntry testEntry1 = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1300, 1300));
+		JournalEntry testEntry2 = myAccountantApp.createJournalEntry("2", dates[0], createTestList(1300, 1300));
+		JournalEntry testEntry3 = myAccountantApp.createJournalEntry("3", dates[0], createTestList(1200, 1200));
+		myDB.add(testEntry1);
+		myDB.add(testEntry2);
+		myDB.add(testEntry3);
+		assertEquals(3, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testGetAllRegistrationITOneBadElement() {
+		myAccountantApp.authenticate(myUser);
+		Date[] dates = createDates();
+		JournalEntry testEntry1 = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1300, 1300));
+		JournalEntry testEntry2 = myAccountantApp.createJournalEntry("2",
+				new Date(new GregorianCalendar(1910 + 100, 12, 11).getTimeInMillis()), createTestList(1300, 1300));
+		JournalEntry testEntry3 = myAccountantApp.createJournalEntry("3", dates[0], createTestList(1200, 1200));
+		myDB.add(testEntry1);
+		myDB.add(testEntry2);
+		myDB.add(testEntry3);
+		assertEquals(2, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
+	}
+
+	@Test
+	public void testGetAllRegistrationITLostElement() {
+		myAccountantApp.authenticate(myUser);
+		Date[] dates = createDates();
+		JournalEntry testEntry1 = myAccountantApp.createJournalEntry("1", dates[0], createTestList(1300, 1300));
+		JournalEntry testEntry2 = myAccountantApp.createJournalEntry("2", dates[0], createTestList(1100, 1100));
+		myDB.add(testEntry1);
+		myDB.add(testEntry2);
+		myDB.delete("2");
+		assertEquals(1, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
 	}
 
 	private Date[] createDates() {
