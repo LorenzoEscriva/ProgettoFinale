@@ -1,16 +1,23 @@
 package com.tap.project.escrivaghera.AccountantApp;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import com.tap.project.escrivaghera.AccountantApp.exception.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryException;
+import com.tap.project.escrivaghera.AccountantApp.exception.NotAuthenticationException;
+import com.tap.project.escrivaghera.AccountantApp.helper.MongoTestHelper;
 
 public class AccountantAppTest {
 
@@ -41,14 +48,14 @@ public class AccountantAppTest {
 	@Test
 	public void testCreateJournalEntryWithBadListOfCounts() {
 		myAccountantApp.authenticate(user);
-		ArrayList<Count> myCounts = createTestList(1200.0, 1100.0);
+		ArrayList<Count> myCounts = MongoTestHelper.createTestList(1200.0, 1100.0);
 		assertNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
 	}
 
 	@Test
 	public void testCreateJournalEntryWithGoodListOfCounts() {
 		myAccountantApp.authenticate(user);
-		ArrayList<Count> myCounts = createTestList(1200.0, 1200.0);
+		ArrayList<Count> myCounts = MongoTestHelper.createTestList(1200.0, 1200.0);
 		assertNotNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
 	}
 
@@ -84,7 +91,7 @@ public class AccountantAppTest {
 	@Test
 	public void testGetAllRegistractionWithOneElement() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(user);
-		Date[] dates = createDates();
+		Date[] dates = MongoTestHelper.createDates();
 		List<JournalEntry> returnList = new ArrayList<JournalEntry>();
 		createJournalEntry(returnList);
 		when(db.getAllRegistration(dates[0], dates[1])).thenReturn(returnList);
@@ -94,7 +101,7 @@ public class AccountantAppTest {
 	@Test
 	public void testGetAllRegistractionWithMoreElement() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(user);
-		Date[] dates = createDates();
+		Date[] dates = MongoTestHelper.createDates();
 		List<JournalEntry> returnList = new ArrayList<JournalEntry>();
 		createJournalEntry(returnList);
 		createJournalEntry(returnList);
@@ -135,29 +142,11 @@ public class AccountantAppTest {
 		lengthOfUserActions = myAccountantApp.getMySession().getList().size();
 	}
 
-	private Date[] createDates() {
-		Date[] dates = new Date[2];
-		dates[0] = new Date(new GregorianCalendar(1900 + 116, 10, 1).getTimeInMillis());
-		dates[1] = new Date(new GregorianCalendar(1900 + 116, 11, 1).getTimeInMillis());
-		return dates;
-	}
-
 	private void createJournalEntry(List<JournalEntry> returnList) throws IllegalJournalEntryException {
 		JournalEntry entry = new JournalEntry("1",
 				new Date(new GregorianCalendar(1900 + 116, 11, 10).getTimeInMillis()));
-		entry.setListOfCount(createTestList(1200.0, 1200.0));
+		entry.setListOfCount(MongoTestHelper.createTestList(1200.0, 1200.0));
 		returnList.add(entry);
-	}
-
-	private ArrayList<Count> createTestList(double leftValue, double rightValue) {
-		ArrayList<Count> myCounts = new ArrayList<Count>();
-		Count count = new Count("count1", true);
-		count.setValue(leftValue);
-		myCounts.add(count);
-		count = new Count("count2", false);
-		count.setValue(rightValue);
-		myCounts.add(count);
-		return myCounts;
 	}
 
 }
