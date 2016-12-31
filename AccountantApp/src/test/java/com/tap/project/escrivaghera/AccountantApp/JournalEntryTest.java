@@ -1,16 +1,18 @@
 package com.tap.project.escrivaghera.AccountantApp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.tap.project.escrivaghera.AccountantApp.exception.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryException;
+import com.tap.project.escrivaghera.AccountantApp.helper.GenericHelper;
 
 public class JournalEntryTest {
 
@@ -29,14 +31,14 @@ public class JournalEntryTest {
 
 	@Test
 	public void setListOfCountTestGoodCase() throws IllegalJournalEntryException {
-		List<Count> list = createTestList(1200.0, 1200.0);
+		List<Count> list = GenericHelper.createTestList(1200.0, 1200.0);
 		myJournalEntry.setListOfCount(list);
 		assertEquals(list, myJournalEntry.getListOfCount());
 	}
 
 	@Test
 	public void setListOfCountTestExceptionCase() {
-		List<Count> list = createTestList(1200.0, 1100.0);
+		List<Count> list = GenericHelper.createTestList(1200.0, 1100.0);
 		try {
 			myJournalEntry.setListOfCount(list);
 			fail("should not go here");
@@ -48,20 +50,10 @@ public class JournalEntryTest {
 
 	@Test
 	public void testToListOfBasicDBObject() throws IllegalJournalEntryException {
-		List<Count> list = createTestList(1200.0, 1200.0);
+		List<Count> list = GenericHelper.createTestList(1200.0, 1200.0);
 		myJournalEntry.setListOfCount(list);
 
 		assertEquals(2, myJournalEntry.toListOfBasicDBObject().size());
 	}
 
-	private ArrayList<Count> createTestList(double leftValue, double rightValue) {
-		ArrayList<Count> myCounts = new ArrayList<Count>();
-		Count count = new Count("count1", true);
-		count.setValue(leftValue);
-		myCounts.add(count);
-		count = new Count("count2", false);
-		count.setValue(rightValue);
-		myCounts.add(count);
-		return myCounts;
-	}
 }
