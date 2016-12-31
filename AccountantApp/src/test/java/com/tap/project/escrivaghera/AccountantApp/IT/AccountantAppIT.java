@@ -18,7 +18,6 @@ import com.tap.project.escrivaghera.AccountantApp.JournalEntry;
 import com.tap.project.escrivaghera.AccountantApp.Server;
 import com.tap.project.escrivaghera.AccountantApp.User;
 import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryException;
-import com.tap.project.escrivaghera.AccountantApp.helper.GenericHelper;
 import com.tap.project.escrivaghera.AccountantApp.helper.MongoTestHelper;
 import com.tap.project.escrivaghera.AccountantApp.mongo.MongoDatabaseWrapper;
 
@@ -114,7 +113,7 @@ public class AccountantAppIT {
 
 	private Date[] authenticateAndCreateDates() {
 		myAccountantApp.authenticate(myUser);
-		Date[] dates = GenericHelper.createDates();
+		Date[] dates = mongoTestHelper.createDates();
 		return dates;
 	}
 }

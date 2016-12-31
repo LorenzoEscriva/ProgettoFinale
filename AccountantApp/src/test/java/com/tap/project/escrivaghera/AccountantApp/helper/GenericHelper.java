@@ -8,7 +8,7 @@ import com.tap.project.escrivaghera.AccountantApp.Count;
 
 public class GenericHelper {
 
-	public static ArrayList<Count> createTestList(double leftValue, double rightValue) {
+	public ArrayList<Count> createTestList(double leftValue, double rightValue) {
 		ArrayList<Count> myCounts = new ArrayList<Count>();
 		Count count = new Count("count1", true);
 		count.setValue(leftValue);
@@ -19,7 +19,7 @@ public class GenericHelper {
 		return myCounts;
 	}
 
-	public static Date[] createDates() {
+	public Date[] createDates() {
 		Date[] dates = new Date[2];
 		dates[0] = new Date(new GregorianCalendar(1900 + 116, 11, 1).getTimeInMillis());
 		dates[1] = new Date(new GregorianCalendar(1900 + 116, 11, 31).getTimeInMillis());

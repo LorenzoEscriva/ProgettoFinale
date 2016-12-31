@@ -25,6 +25,7 @@ public class AccountantAppTest {
 	private Database db;
 	private User user;
 	private int lengthOfUserActions;
+	private GenericHelper myGenericHelper;
 
 	@Before
 	public void setUp() throws Exception {
@@ -32,6 +33,7 @@ public class AccountantAppTest {
 		Server serverTest = new Server(db);
 		myAccountantApp = new AccountantApp(serverTest);
 		user = new User("1", "test", "test");
+		myGenericHelper=new GenericHelper();
 	}
 
 	@Test
@@ -48,14 +50,14 @@ public class AccountantAppTest {
 	@Test
 	public void testCreateJournalEntryWithBadListOfCounts() {
 		myAccountantApp.authenticate(user);
-		ArrayList<Count> myCounts = GenericHelper.createTestList(1200.0, 1100.0);
+		ArrayList<Count> myCounts = myGenericHelper.createTestList(1200.0, 1100.0);
 		assertNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
 	}
 
 	@Test
 	public void testCreateJournalEntryWithGoodListOfCounts() {
 		myAccountantApp.authenticate(user);
-		ArrayList<Count> myCounts = GenericHelper.createTestList(1200.0, 1200.0);
+		ArrayList<Count> myCounts = myGenericHelper.createTestList(1200.0, 1200.0);
 		assertNotNull(myAccountantApp.createJournalEntry("1", new Date(), myCounts));
 	}
 
@@ -142,14 +144,14 @@ public class AccountantAppTest {
 
 	private Date[] authenticateAndCreateDates() {
 		myAccountantApp.authenticate(user);
-		Date[] dates = GenericHelper.createDates();
+		Date[] dates = myGenericHelper.createDates();
 		return dates;
 	}
 
 	private void createJournalEntry(List<JournalEntry> returnList) throws IllegalJournalEntryException {
 		JournalEntry entry = new JournalEntry("1",
 				new Date(new GregorianCalendar(1900 + 116, 11, 10).getTimeInMillis()));
-		entry.setListOfCount(GenericHelper.createTestList(1200.0, 1200.0));
+		entry.setListOfCount(myGenericHelper.createTestList(1200.0, 1200.0));
 		returnList.add(entry);
 	}
 

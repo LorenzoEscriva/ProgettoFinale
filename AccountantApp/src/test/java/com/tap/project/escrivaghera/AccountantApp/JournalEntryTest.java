@@ -18,10 +18,12 @@ public class JournalEntryTest {
 
 	private static final Date date = Calendar.getInstance().getTime();
 	private JournalEntry myJournalEntry;
+	private GenericHelper myGenericHelper;
 
 	@Before
 	public void setUp() throws Exception {
 		myJournalEntry = new JournalEntry("id1", date);
+		myGenericHelper=new GenericHelper();
 	}
 
 	@Test
@@ -31,14 +33,14 @@ public class JournalEntryTest {
 
 	@Test
 	public void setListOfCountTestGoodCase() throws IllegalJournalEntryException {
-		List<Count> list = GenericHelper.createTestList(1200.0, 1200.0);
+		List<Count> list = myGenericHelper.createTestList(1200.0, 1200.0);
 		myJournalEntry.setListOfCount(list);
 		assertEquals(list, myJournalEntry.getListOfCount());
 	}
 
 	@Test
 	public void setListOfCountTestExceptionCase() {
-		List<Count> list = GenericHelper.createTestList(1200.0, 1100.0);
+		List<Count> list = myGenericHelper.createTestList(1200.0, 1100.0);
 		try {
 			myJournalEntry.setListOfCount(list);
 			fail("should not go here");
@@ -50,7 +52,7 @@ public class JournalEntryTest {
 
 	@Test
 	public void testToListOfBasicDBObject() throws IllegalJournalEntryException {
-		List<Count> list = GenericHelper.createTestList(1200.0, 1200.0);
+		List<Count> list = myGenericHelper.createTestList(1200.0, 1200.0);
 		myJournalEntry.setListOfCount(list);
 
 		assertEquals(2, myJournalEntry.toListOfBasicDBObject().size());
