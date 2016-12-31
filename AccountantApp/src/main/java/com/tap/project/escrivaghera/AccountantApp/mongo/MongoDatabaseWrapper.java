@@ -41,16 +41,13 @@ public class MongoDatabaseWrapper implements Database {
 	}
 
 	@Override
-	public int delete(String id) {
+	public void delete(String id) {
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("id", id);
 		DBObject find;
-		int numberOfRecordsDelete = 0;
 		do {
 			find = accountingRecords.findAndRemove(searchQuery);
-			numberOfRecordsDelete++;
 		} while (find != null);
-		return numberOfRecordsDelete - 1;
 	}
 
 	/*

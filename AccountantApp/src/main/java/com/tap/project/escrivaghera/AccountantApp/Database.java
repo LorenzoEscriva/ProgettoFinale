@@ -9,7 +9,7 @@ public interface Database {
 
 	public void modify(String id, JournalEntry changeEntry);
 
-	public int delete(String id);
+	public void delete(String id);
 
 	public List<JournalEntry> getAllRegistration(Date date1, Date date2);
 }
