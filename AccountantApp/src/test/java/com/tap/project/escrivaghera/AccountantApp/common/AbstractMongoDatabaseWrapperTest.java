@@ -75,7 +75,7 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 	public void testGetAllRegistractionNotEmpty() throws IllegalJournalEntryException {
 		Date[] dates = mongoTestHelper.createDates();
 		JournalEntry added = mongoTestHelper.createJournalEntry("1", 1200.0, 1200.0, 0);
-		JournalEntry added2 = mongoTestHelper.createJournalEntry("2", 1300.0, 1300.0, 0);
+		JournalEntry added2 = mongoTestHelper.createJournalEntry("2", 1300.0, 1300.0, 1);
 		mongoTestHelper.addRecord(added);
 		mongoTestHelper.addRecord(added2);
 		assertEquals(2, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());

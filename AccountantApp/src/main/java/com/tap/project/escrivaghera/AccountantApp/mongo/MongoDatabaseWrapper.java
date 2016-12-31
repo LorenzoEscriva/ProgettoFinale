@@ -70,7 +70,7 @@ public class MongoDatabaseWrapper implements Database {
 			while (i < listOfJournalEntry.size()) {
 				JournalEntry current = listOfJournalEntry.get(i);
 				Date currentDate = current.getDate();
-				if (currentDate.compareTo(date1) < 0 || currentDate.compareTo(date2) > 0)
+				if (currentDate.compareTo(date1) < 0 || currentDate.compareTo(date2)> 0)
 					listOfJournalEntry.remove(i);
 				i = i + 1;
 			}
