@@ -57,5 +57,13 @@ public class JournalEntryTest {
 
 		assertEquals(2, myJournalEntry.toListOfBasicDBObject().size());
 	}
+	
+	@Test
+	public void testTypeOfCountDescription() throws IllegalJournalEntryException{
+		List<Count> list = myGenericHelper.createTestList(1200.0, 1200.0);
+		myJournalEntry.setListOfCount(list);
+		
+		assertTrue(myJournalEntry.getListOfCount().get(0).getDescrizione().equals("count1"));
+	}
 
 }
