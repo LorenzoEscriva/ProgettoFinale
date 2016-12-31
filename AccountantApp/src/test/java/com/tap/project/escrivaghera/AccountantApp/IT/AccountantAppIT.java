@@ -41,7 +41,7 @@ public class AccountantAppIT {
 	@Test
 	public void testAddIT() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(myUser);
-		JournalEntry testEntry = mongoTestHelper.createJournalEntry("1", 1100, 1100);
+		JournalEntry testEntry = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
 		myAccountantApp.add(testEntry);
 		assertTrue(mongoTestHelper.containRecord(testEntry));
 	}
@@ -49,8 +49,8 @@ public class AccountantAppIT {
 	@Test
 	public void testModifyIT() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(myUser);
-		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100);
-		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("1", 1200, 1200);
+		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
+		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("1", 1200, 1200, 0);
 		mongoTestHelper.addRecord(testEntry1);
 		myAccountantApp.modify("1", testEntry2);
 		assertFalse(mongoTestHelper.containRecord(testEntry1));
@@ -60,7 +60,7 @@ public class AccountantAppIT {
 	@Test
 	public void testDeleteIT() throws IllegalJournalEntryException {
 		myAccountantApp.authenticate(myUser);
-		JournalEntry removed = mongoTestHelper.createJournalEntry("1", 1100, 1100);
+		JournalEntry removed = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
 		mongoTestHelper.addRecord(removed);
 		myAccountantApp.delete("1");
 		assertFalse(mongoTestHelper.containRecord(removed));
@@ -69,7 +69,7 @@ public class AccountantAppIT {
 	@Test
 	public void testGetAllRegistrationITOneElement() throws IllegalJournalEntryException {
 		Date[] dates = authenticateAndCreateDates();
-		JournalEntry testEntry = mongoTestHelper.createJournalEntry("1", 1100, 1100);
+		JournalEntry testEntry = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
 		mongoTestHelper.addRecord(testEntry);
 		assertEquals(1, myAccountantApp.getAllRegistration(dates[0], dates[1]).size());
 	}
@@ -77,9 +77,9 @@ public class AccountantAppIT {
 	@Test
 	public void testGetAllRegistrationITMoreElements() throws IllegalJournalEntryException {
 		Date[] dates = authenticateAndCreateDates();
-		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100);
-		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("2", 1200, 1200);
-		JournalEntry testEntry3 = mongoTestHelper.createJournalEntry("3", 1300, 1300);
+		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
+		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("2", 1200, 1200, 0);
+		JournalEntry testEntry3 = mongoTestHelper.createJournalEntry("3", 1300, 1300, 0);
 		mongoTestHelper.addRecord(testEntry1);
 		mongoTestHelper.addRecord(testEntry2);
 		mongoTestHelper.addRecord(testEntry3);
@@ -89,8 +89,8 @@ public class AccountantAppIT {
 	@Test
 	public void testGetAllRegistrationITOneBadElement() throws IllegalJournalEntryException {
 		Date[] dates = authenticateAndCreateDates();
-		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100);
-		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("2", 1200, 1200);
+		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
+		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("2", 1200, 1200, 0);
 		JournalEntry testEntry3 = myAccountantApp.createJournalEntry("3",
 				new Date(new GregorianCalendar(1910 + 100, 12, 11).getTimeInMillis()),
 				mongoTestHelper.createTestList(1300, 1300));
@@ -103,8 +103,8 @@ public class AccountantAppIT {
 	@Test
 	public void testGetAllRegistrationITLostElement() throws IllegalJournalEntryException {
 		Date[] dates = authenticateAndCreateDates();
-		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100);
-		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("2", 1200, 1200);
+		JournalEntry testEntry1 = mongoTestHelper.createJournalEntry("1", 1100, 1100, 0);
+		JournalEntry testEntry2 = mongoTestHelper.createJournalEntry("2", 1200, 1200, 0);
 		mongoTestHelper.addRecord(testEntry1);
 		mongoTestHelper.addRecord(testEntry2);
 		myAccountantApp.delete("2");
