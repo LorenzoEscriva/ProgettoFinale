@@ -17,9 +17,9 @@ public class MongoTestHelper extends GenericHelper {
 	public DBCollection accountingRecords;
 
 	public MongoTestHelper(MongoClient mongoClient) {
-		DB db = mongoClient.getDB("school");
-		db.getCollection("student").drop();
-		accountingRecords = db.getCollection("student");
+		DB db = mongoClient.getDB("AccountingDB");
+		db.getCollection("Accounting").drop();
+		accountingRecords = db.getCollection("Accounting");
 	}
 
 	public JournalEntry createJournalEntry(String id, double leftValue, double rightValue)
