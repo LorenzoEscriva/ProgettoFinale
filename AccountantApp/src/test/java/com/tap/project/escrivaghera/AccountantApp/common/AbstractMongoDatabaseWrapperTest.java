@@ -2,7 +2,6 @@ package com.tap.project.escrivaghera.AccountantApp.common;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.net.UnknownHostException;
@@ -120,6 +119,6 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 			mongoTestHelper.accountingRecords.insert(records.next());
 		}
 		mongoTestHelper.accountingRecords.remove(myListOfRecord.get(0));
-		assertNull(mongoDatabase.getAllRegistration(dates[0], dates[1]));
+		assertEquals(0, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
 	}
 }

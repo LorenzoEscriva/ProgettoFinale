@@ -131,7 +131,7 @@ public class MongoDatabaseWrapper implements Database {
 				listOfJournalEntry.add(newEntry);
 			} catch (ParseException | IllegalJournalEntryException e) {
 				LOGGER.error("EXECPTION: ", e);
-				return null;
+				return new ArrayList<>();
 			}
 			i = i + 1;
 		}
