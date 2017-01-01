@@ -1,7 +1,6 @@
 package com.tap.project.escrivaghera.AccountantApp;
 
 public class Count {
-
 	private String description;
 	private boolean isLeft;
 	private double value;
