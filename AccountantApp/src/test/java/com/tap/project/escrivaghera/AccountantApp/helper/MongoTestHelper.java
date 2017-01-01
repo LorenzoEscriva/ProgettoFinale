@@ -22,10 +22,10 @@ public class MongoTestHelper extends GenericHelper {
 		accountingRecords = db.getCollection("Accounting");
 	}
 
-	public JournalEntry createJournalEntry(String id, double leftValue, double rightValue)
+	public JournalEntry createJournalEntry(String id, double leftValue, double rightValue, int dateIntervall)
 			throws IllegalJournalEntryException {
 		Date[] date = createDates();
-		JournalEntry entry = new JournalEntry(id, date[0]);
+		JournalEntry entry = new JournalEntry(id, date[dateIntervall]);
 		List<Count> myCounts = createTestList(leftValue, rightValue);
 		entry.setListOfCount(myCounts);
 		return entry;
