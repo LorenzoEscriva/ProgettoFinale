@@ -88,7 +88,7 @@ public class MongoDatabaseWrapper implements Database {
 	 * other Count object analyzing the subsequent record that have got equal
 	 * id. We put the objects create into the corresponding list
 	 */
-	private List<JournalEntry> getAllRegistration() {
+	private List<JournalEntry> getAllRegistration() throws RuntimeException{
 		List<JournalEntry> listOfJournalEntry = new ArrayList<JournalEntry>();
 		DBCursor cursor = accountingRecords.find();
 		List<DBObject> myCursorList = cursor.toArray();
