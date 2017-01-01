@@ -157,8 +157,7 @@ public class MongoDatabaseWrapper implements Database {
 
 	private Date convertStringToDate(String dateJournalEntry) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = formatter.parse(dateJournalEntry);
-		return date;
+		return formatter.parse(dateJournalEntry);
 	}
 
 }
