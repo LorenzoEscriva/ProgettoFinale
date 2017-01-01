@@ -111,22 +111,8 @@ public class MongoDatabaseWrapper implements Database {
 				List<Count> counts = new ArrayList<>();
 				Count count = extractCount(newJournalEntryCursor);
 				counts.add(count);
-
-				// we create the other Count object from the subsequent records
-				// info
-				boolean exit = false;
-				while (i + 1 < myCursorList.size() && !exit) {
-					i = i + 1;
-					DBObject newCountCursor = myCursorList.get(i);
-					String idNextRecord = (String) newCountCursor.get("id");
-					if (idNextRecord.equals(idJournalEntry)) {
-						count = extractCount(newCountCursor);
-						counts.add(count);
-					} else {
-						exit = true;
-						i = i - 1;
-					}
-				}
+				
+				i = createCount(myCursorList, i, idJournalEntry, counts);
 				newEntry.setListOfCount(counts);
 				listOfJournalEntry.add(newEntry);
 			} catch (ParseException | IllegalJournalEntryException e) {
@@ -136,6 +122,28 @@ public class MongoDatabaseWrapper implements Database {
 			i = i + 1;
 		}
 		return listOfJournalEntry;
+	}
+
+	private int createCount(List<DBObject> myCursorList, int k,
+			String idJournalEntry, List<Count> counts) {
+		Count count;
+		// we create the other Count object from the subsequent records
+		// info
+		boolean exit = false;
+		int j=k;
+		while (j + 1 < myCursorList.size() && !exit) {
+			j = j + 1;
+			DBObject newCountCursor = myCursorList.get(j);
+			String idNextRecord = (String) newCountCursor.get("id");
+			if (idNextRecord.equals(idJournalEntry)) {
+				count = extractCount(newCountCursor);
+				counts.add(count);
+			} else {
+				exit = true;
+				j = j - 1;
+			}
+		}
+		return j;
 	}
 
 	public Count extractCount(DBObject countCursor) {
