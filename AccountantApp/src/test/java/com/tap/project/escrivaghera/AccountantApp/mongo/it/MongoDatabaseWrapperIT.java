@@ -9,7 +9,7 @@ public class MongoDatabaseWrapperIT extends AbstractMongoDatabaseWrapperTest {
 
 	@Override
 	public MongoClient createMongoClient() throws UnknownHostException {
-		MongoClient mongoClient=new MongoClient(/*"192.168.99.100:27017"*/);
+		MongoClient mongoClient = new MongoClient(/* "192.168.99.100:27017" */);
 		return mongoClient;
 	}
 

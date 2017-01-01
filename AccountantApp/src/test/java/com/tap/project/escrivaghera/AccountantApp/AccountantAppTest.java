@@ -33,7 +33,7 @@ public class AccountantAppTest {
 		Server serverTest = new Server(db);
 		myAccountantApp = new AccountantApp(serverTest);
 		user = new User("1", "test", "test");
-		myGenericHelper=new GenericHelper();
+		myGenericHelper = new GenericHelper();
 	}
 
 	@Test

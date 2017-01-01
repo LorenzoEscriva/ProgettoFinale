@@ -82,27 +82,29 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 	}
 
 	@Test
-	public void testGetAllRegistractionWithOneRegistractionNotIncludedBeforeFirstDate() throws IllegalJournalEntryException {
+	public void testGetAllRegistractionWithOneRegistractionNotIncludedBeforeFirstDate()
+			throws IllegalJournalEntryException {
 		Date[] dates = mongoTestHelper.createDates();
 		createDistributedJournalEntry(new GregorianCalendar(1900 + 116, 10, 1));
 		assertEquals(2, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
 	}
-	
+
 	@Test
-	public void testGetAllRegistractionWithOneRegistractionNotIncludedBeforeSecondDate() throws IllegalJournalEntryException {
+	public void testGetAllRegistractionWithOneRegistractionNotIncludedBeforeSecondDate()
+			throws IllegalJournalEntryException {
 		Date[] dates = mongoTestHelper.createDates();
 		createDistributedJournalEntry(new GregorianCalendar(1900 + 117, 1, 1));
 		assertEquals(2, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
 	}
 
-	private void createDistributedJournalEntry(GregorianCalendar dateExcludingRecord) throws IllegalJournalEntryException {
+	private void createDistributedJournalEntry(GregorianCalendar dateExcludingRecord)
+			throws IllegalJournalEntryException {
 		JournalEntry added = mongoTestHelper.createJournalEntry("1", 1200.0, 1200.0, 0);
 		JournalEntry added2 = mongoTestHelper.createJournalEntry("2", 1300.0, 1300.0, 1);
 		mongoTestHelper.addRecord(added);
 		mongoTestHelper.addRecord(added2);
 		List<Count> myCount = mongoTestHelper.createTestList(1500.0, 1500.0);
-		JournalEntry entry = new JournalEntry("3",
-				new Date(dateExcludingRecord.getTimeInMillis()));
+		JournalEntry entry = new JournalEntry("3", new Date(dateExcludingRecord.getTimeInMillis()));
 		entry.setListOfCount(myCount);
 		Iterator<BasicDBObject> records = entry.toListOfBasicDBObject().iterator();
 		while (records.hasNext()) {

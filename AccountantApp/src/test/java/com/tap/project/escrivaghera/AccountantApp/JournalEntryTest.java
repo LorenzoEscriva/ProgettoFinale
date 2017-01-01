@@ -23,7 +23,7 @@ public class JournalEntryTest {
 	@Before
 	public void setUp() throws Exception {
 		myJournalEntry = new JournalEntry("id1", date);
-		myGenericHelper=new GenericHelper();
+		myGenericHelper = new GenericHelper();
 	}
 
 	@Test
@@ -57,12 +57,12 @@ public class JournalEntryTest {
 
 		assertEquals(2, myJournalEntry.toListOfBasicDBObject().size());
 	}
-	
+
 	@Test
-	public void testTypeOfCountDescription() throws IllegalJournalEntryException{
+	public void testTypeOfCountDescription() throws IllegalJournalEntryException {
 		List<Count> list = myGenericHelper.createTestList(1200.0, 1200.0);
 		myJournalEntry.setListOfCount(list);
-		
+
 		assertTrue(myJournalEntry.getListOfCount().get(0).getDescrizione().equals("count1"));
 	}
 
