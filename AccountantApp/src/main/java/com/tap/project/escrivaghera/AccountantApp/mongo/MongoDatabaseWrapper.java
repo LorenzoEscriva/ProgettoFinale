@@ -93,7 +93,7 @@ public class MongoDatabaseWrapper implements Database {
 	 * id. We put the objects create into the corresponding list
 	 */
 	private List<JournalEntry> getAllRegistration() {
-		List<JournalEntry> listOfJournalEntry = new ArrayList<JournalEntry>();
+		List<JournalEntry> listOfJournalEntry = new ArrayList<>();
 		DBCursor cursor = accountingRecords.find();
 		List<DBObject> myCursorList = cursor.toArray();
 		int i = 0;
@@ -108,7 +108,7 @@ public class MongoDatabaseWrapper implements Database {
 				Date date = convertStringToDate(dateJournalEntry);
 				JournalEntry newEntry = new JournalEntry(idJournalEntry, date);
 
-				List<Count> counts = new ArrayList<Count>();
+				List<Count> counts = new ArrayList<>();
 				Count count = extractCount(newJournalEntryCursor);
 				counts.add(count);
 

@@ -20,7 +20,7 @@ public class JournalEntry {
 		super();
 		this.Id = id;
 		this.date = date;
-		listOfCount = new ArrayList<Count>();
+		listOfCount = new ArrayList<>();
 	}
 
 	public String getId() {
@@ -52,7 +52,7 @@ public class JournalEntry {
 	}
 
 	public List<BasicDBObject> toListOfBasicDBObject() {
-		List<BasicDBObject> listBasicDBObject = new ArrayList<BasicDBObject>();
+		List<BasicDBObject> listBasicDBObject = new ArrayList<>();
 		String entryDate = convertDateIntoString(date);
 		Iterator<Count> countit = listOfCount.iterator();
 		while (countit.hasNext()) {

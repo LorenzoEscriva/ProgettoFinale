@@ -11,7 +11,7 @@ public class Server {
 	private Database db;
 
 	public Server(Database database) {
-		sessionList = new ArrayList<Session>();
+		sessionList = new ArrayList<>();
 		currentSession = 0;
 		db = database;
 	}

@@ -16,7 +16,7 @@ public class Session {
 	public Session(int id, User user) {
 		this.id = id;
 		this.user = user;
-		userActions = new ArrayList<String>();
+		userActions = new ArrayList<>();
 	}
 
 	public void addDescription(String action) {
