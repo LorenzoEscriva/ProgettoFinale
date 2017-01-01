@@ -40,7 +40,7 @@ public class JournalEntry {
 				countright = countright + list.get(i).getValue();
 			}
 		}
-		if (countleft != countright)
+		if (!new Double(countleft).equals(new Double(countright)))
 			throw new IllegalJournalEntryException(
 					"The total of counts is several, the difference between the left count and the right count is: "
 							+ (countleft - countright));
