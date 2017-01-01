@@ -69,7 +69,7 @@ public class MongoDatabaseWrapper implements Database {
 	@Override
 	public List<JournalEntry> getAllRegistration(Date date1, Date date2) {
 		List<JournalEntry> listOfJournalEntry = getAllRegistration();
-		if (listOfJournalEntry != null) {
+		if (!listOfJournalEntry.isEmpty()) {
 			int i = 0;
 			while (i < listOfJournalEntry.size()) {
 				JournalEntry current = listOfJournalEntry.get(i);

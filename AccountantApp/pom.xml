@@ -18,9 +18,9 @@
 		<jacoco.report.path> ${project.reporting.outputDirectory}/jacoco-ut</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPath>${jacoco.data.file}</sonar.jacoco.reportPath>
-		<sonar.issue.ignore.multicriteria>ell</sonar.issue.ignore.multicriteria>
-		<sonar.issue.ignore.multicriteria.ell.ruleKey>squid:S00120</sonar.issue.ignore.multicriteria.ell.ruleKey>
-		<sonar.issue.ignore.multicriteria.ell.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.ell.resourceKey>
+		<sonar.issue.ignore.multicriteria>el1</sonar.issue.ignore.multicriteria>
+		<sonar.issue.ignore.multicriteria.el1.ruleKey>squid:S00120</sonar.issue.ignore.multicriteria.el1.ruleKey>
+		<sonar.issue.ignore.multicriteria.el1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.el1.resourceKey>
 	</properties>
 
 	<build>
