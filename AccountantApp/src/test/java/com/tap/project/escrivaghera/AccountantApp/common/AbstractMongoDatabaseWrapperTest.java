@@ -110,7 +110,7 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 		}
 	}
 
-	@Test
+	@Test(expected=RuntimeException.class)
 	public void testGetAllRegistractionWithLostRecord() throws IllegalJournalEntryException {
 		Date[] dates = mongoTestHelper.createDates();
 		JournalEntry myEntry = mongoTestHelper.createJournalEntry("1", 1200.0, 1200.0, 0);
@@ -120,6 +120,6 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 			mongoTestHelper.accountingRecords.insert(records.next());
 		}
 		mongoTestHelper.accountingRecords.remove(myListOfRecord.get(0));
-		assertNull(mongoDatabase.getAllRegistration(dates[0], dates[1]));
+		mongoDatabase.getAllRegistration(dates[0], dates[1]);
 	}
 }
