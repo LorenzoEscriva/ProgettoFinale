@@ -28,7 +28,8 @@ public class Session {
 	public List<String> getList() {
 		return userActions;
 	}
-
+	
+	@Override
 	public String toString() {
 		String sessionDescription = "The user " + user.toString() + " makes this actions:\n";
 		Iterator<String> actionit = userActions.iterator();
