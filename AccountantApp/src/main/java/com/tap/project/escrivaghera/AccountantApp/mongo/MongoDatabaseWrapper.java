@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.tap.project.escrivaghera.AccountantApp.AccountantApp;
 import com.tap.project.escrivaghera.AccountantApp.Count;
 import com.tap.project.escrivaghera.AccountantApp.Database;
 import com.tap.project.escrivaghera.AccountantApp.JournalEntry;
@@ -20,6 +23,7 @@ import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryE
 
 public class MongoDatabaseWrapper implements Database {
 	private DBCollection accountingRecords;
+	private final static Logger LOGGER = Logger.getLogger(AccountantApp.class);
 
 	public MongoDatabaseWrapper(MongoClient mongoClient) {
 		DB db = mongoClient.getDB("AccountingDB");
@@ -88,7 +92,7 @@ public class MongoDatabaseWrapper implements Database {
 	 * other Count object analyzing the subsequent record that have got equal
 	 * id. We put the objects create into the corresponding list
 	 */
-	private List<JournalEntry> getAllRegistration() throws RuntimeException{
+	private List<JournalEntry> getAllRegistration() {
 		List<JournalEntry> listOfJournalEntry = new ArrayList<JournalEntry>();
 		DBCursor cursor = accountingRecords.find();
 		List<DBObject> myCursorList = cursor.toArray();
@@ -126,7 +130,8 @@ public class MongoDatabaseWrapper implements Database {
 				newEntry.setListOfCount(counts);
 				listOfJournalEntry.add(newEntry);
 			} catch (ParseException | IllegalJournalEntryException e) {
-				throw new RuntimeException(e);
+				LOGGER.error("EXECPTION: ", e);
+				return null;
 			}
 			i = i + 1;
 		}

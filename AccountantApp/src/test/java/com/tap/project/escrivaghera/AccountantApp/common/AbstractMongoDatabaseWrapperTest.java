@@ -2,6 +2,7 @@ package com.tap.project.escrivaghera.AccountantApp.common;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.net.UnknownHostException;
@@ -109,7 +110,7 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 		}
 	}
 
-	@Test(expected=RuntimeException.class)
+	@Test
 	public void testGetAllRegistractionWithLostRecord() throws IllegalJournalEntryException {
 		Date[] dates = mongoTestHelper.createDates();
 		JournalEntry myEntry = mongoTestHelper.createJournalEntry("1", 1200.0, 1200.0, 0);
@@ -119,6 +120,6 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 			mongoTestHelper.accountingRecords.insert(records.next());
 		}
 		mongoTestHelper.accountingRecords.remove(myListOfRecord.get(0));
-		mongoDatabase.getAllRegistration(dates[0], dates[1]);
+		assertNull(mongoDatabase.getAllRegistration(dates[0], dates[1]));
 	}
 }
