@@ -62,7 +62,7 @@ public class JournalEntry {
 			record.put("date", entryDate);
 			record.put("description", count.getDescrizione());
 			record.put("value", count.getValue());
-			record.put("isLeft", new String(count.isLeft() + ""));
+			record.put("isLeft", Boolean.toString(count.isLeft()));
 			listBasicDBObject.add(record);
 		}
 		return listBasicDBObject;

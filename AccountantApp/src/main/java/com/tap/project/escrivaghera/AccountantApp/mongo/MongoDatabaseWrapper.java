@@ -140,7 +140,7 @@ public class MongoDatabaseWrapper implements Database {
 
 	public Count extractCount(DBObject countCursor) {
 		String elementDescription = (String) countCursor.get("description");
-		boolean elementIsLeft = new Boolean((String) countCursor.get("isLeft"));
+		boolean elementIsLeft = Boolean.parseBoolean((String) countCursor.get("isLeft"));
 		Count count = new Count(elementDescription, elementIsLeft);
 		double elementValue = (Double) countCursor.get("value");
 		count.setValue(elementValue);
