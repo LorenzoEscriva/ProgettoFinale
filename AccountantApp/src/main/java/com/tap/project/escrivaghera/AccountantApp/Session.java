@@ -11,7 +11,7 @@ public class Session {
 	private int id;
 	private User user;
 	private List<String> userActions;
-	private final static Logger LOGGER = Logger.getLogger(Session.class);
+	private static final Logger LOGGER = Logger.getLogger(Session.class);
 
 	public Session(int id, User user) {
 		this.id = id;

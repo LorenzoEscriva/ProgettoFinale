@@ -12,7 +12,7 @@ public class AccountantApp {
 	private Session mySession;
 	private Database myDB;
 	private Server myServer;
-	private final static Logger LOGGER = Logger.getLogger(AccountantApp.class);
+	private static final Logger LOGGER = Logger.getLogger(AccountantApp.class);
 
 	public AccountantApp(Server server) {
 		this.myServer = server;

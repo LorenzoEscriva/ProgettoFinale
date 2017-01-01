@@ -23,7 +23,7 @@ import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryE
 
 public class MongoDatabaseWrapper implements Database {
 	private DBCollection accountingRecords;
-	private final static Logger LOGGER = Logger.getLogger(AccountantApp.class);
+	private static final Logger LOGGER = Logger.getLogger(AccountantApp.class);
 
 	public MongoDatabaseWrapper(MongoClient mongoClient) {
 		DB db = mongoClient.getDB("AccountingDB");
