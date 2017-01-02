@@ -21,7 +21,8 @@
 		<sonar.issue.ignore.multicriteria>el1</sonar.issue.ignore.multicriteria>
 		<sonar.issue.ignore.multicriteria.el1.ruleKey>squid:S00120</sonar.issue.ignore.multicriteria.el1.ruleKey>
 		<sonar.issue.ignore.multicriteria.el1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.el1.resourceKey>
-		<sonar.coverage.configuraction.exclusions>**/Main.*</sonar.coverage.configuraction.exclusions>
+		<sonar.coverage.exclusions>**/Main.*</sonar.coverage.exclusions>
+		<sonar.exclusions>**/Main.*</sonar.exclusions>
 	</properties>
 
 	<build>
