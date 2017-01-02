@@ -111,7 +111,7 @@ public class MongoDatabaseWrapper implements Database {
 				List<Count> counts = new ArrayList<>();
 				Count count = extractCount(newJournalEntryCursor);
 				counts.add(count);
-				
+
 				i = createCount(myCursorList, i, idJournalEntry, counts);
 				newEntry.setListOfCount(counts);
 				listOfJournalEntry.add(newEntry);
@@ -124,13 +124,12 @@ public class MongoDatabaseWrapper implements Database {
 		return listOfJournalEntry;
 	}
 
-	private int createCount(List<DBObject> myCursorList, int k,
-			String idJournalEntry, List<Count> counts) {
+	private int createCount(List<DBObject> myCursorList, int k, String idJournalEntry, List<Count> counts) {
 		Count count;
 		// we create the other Count object from the subsequent records
 		// info
 		boolean exit = false;
-		int j=k;
+		int j = k;
 		while (j + 1 < myCursorList.size() && !exit) {
 			j = j + 1;
 			DBObject newCountCursor = myCursorList.get(j);
