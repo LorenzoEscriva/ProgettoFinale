@@ -21,6 +21,7 @@
 		<sonar.issue.ignore.multicriteria>el1</sonar.issue.ignore.multicriteria>
 		<sonar.issue.ignore.multicriteria.el1.ruleKey>squid:S00120</sonar.issue.ignore.multicriteria.el1.ruleKey>
 		<sonar.issue.ignore.multicriteria.el1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.el1.resourceKey>
+		<sonar.coverage.configuraction.exclusions>**/Main.*</sonar.coverage.configuraction.exclusions>
 	</properties>
 
 	<build>
@@ -52,6 +53,9 @@
 						<configuration>
 							<destFile>${jacoco.data.file}</destFile>
 							<propertyName>surefireArgLine</propertyName>
+							<excludes>
+								<exclude>**/Main.*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 					<execution>
