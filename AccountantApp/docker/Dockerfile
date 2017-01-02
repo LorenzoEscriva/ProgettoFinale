@@ -1,6 +1,8 @@
 FROM openjdk:8
 
-COPY /target/AccountantApp-0.0.1-SNAPSHOT-all.jar /app/app.jar
+ARG fatjar
+
+COPY /maven/$fatjar /app/app.jar
 
 WORKDIR /app
 
