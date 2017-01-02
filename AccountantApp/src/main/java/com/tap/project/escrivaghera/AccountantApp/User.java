@@ -13,6 +13,7 @@ public class User {
 		this.surname = surname;
 	}
 
+	@Override
 	public String toString() {
 		return id + " " + name + " " + surname;
 	}

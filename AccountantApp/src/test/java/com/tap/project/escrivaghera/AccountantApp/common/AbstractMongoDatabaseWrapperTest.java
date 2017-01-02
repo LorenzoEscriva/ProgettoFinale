@@ -122,6 +122,6 @@ public abstract class AbstractMongoDatabaseWrapperTest {
 			mongoTestHelper.accountingRecords.insert(records.next());
 		}
 		mongoTestHelper.accountingRecords.remove(myListOfRecord.get(0));
-		assertNull(mongoDatabase.getAllRegistration(dates[0], dates[1]));
+		assertEquals(0, mongoDatabase.getAllRegistration(dates[0], dates[1]).size());
 	}
 }

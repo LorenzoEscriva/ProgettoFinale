@@ -17,6 +17,13 @@
 		<jacoco.data.file>
 			${project.build.directory}/coverage-report/jacoco.exec</jacoco.data.file>
 		<jacoco.report.path> ${project.reporting.outputDirectory}/jacoco-ut</jacoco.report.path>
+		<sonar.language>java</sonar.language>
+		<sonar.jacoco.reportPath>${jacoco.data.file}</sonar.jacoco.reportPath>
+		<sonar.issue.ignore.multicriteria>el1</sonar.issue.ignore.multicriteria>
+		<sonar.issue.ignore.multicriteria.el1.ruleKey>squid:S00120</sonar.issue.ignore.multicriteria.el1.ruleKey>
+		<sonar.issue.ignore.multicriteria.el1.resourceKey>**/*.java</sonar.issue.ignore.multicriteria.el1.resourceKey>
+		<sonar.coverage.exclusions>**/Main.*</sonar.coverage.exclusions>
+		<sonar.exclusions>**/Main.*</sonar.exclusions>
 	</properties>
 
 	<build>
@@ -30,6 +37,9 @@
 						<jacocoReports>
 							<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
 						</jacocoReports>
+						<excludes>
+							<exclude>**/Main.*</exclude>
+						</excludes>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -48,6 +58,9 @@
 						<configuration>
 							<destFile>${jacoco.data.file}</destFile>
 							<propertyName>surefireArgLine</propertyName>
+							<excludes>
+								<exclude>**/Main.*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 					<execution>
@@ -59,6 +72,9 @@
 						<configuration>
 							<dataFile>${jacoco.data.file}</dataFile>
 							<outputDirectory>${jacoco.report.path}</outputDirectory>
+							<excludes>
+								<exclude>**/Main.*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>
