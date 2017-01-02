@@ -18,5 +18,5 @@ install:
   - docker pull mongo
 
 script:
- - mvn -f AccountantApp/pom.xml clean verify coveralls:report
+ - mvn -f AccountantApp/pom.xml clean verify
  - mvn -f AccountantApp/pom.xml verify -Pdocker-compose
