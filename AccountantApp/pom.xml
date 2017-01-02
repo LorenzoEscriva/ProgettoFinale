@@ -304,7 +304,7 @@
 									<run>
 										<wait>
 											<time>10000</time>
-											<log>Accountant-app terminates</log>
+											<log>Accountant app terminates</log>
 										</wait>
 									</run>
 								</image>
