@@ -70,6 +70,9 @@
 						<configuration>
 							<dataFile>${jacoco.data.file}</dataFile>
 							<outputDirectory>${jacoco.report.path}</outputDirectory>
+							<excludes>
+								<exclude>**/Main.*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>
