@@ -21,16 +21,35 @@ import com.tap.project.escrivaghera.AccountantApp.Database;
 import com.tap.project.escrivaghera.AccountantApp.JournalEntry;
 import com.tap.project.escrivaghera.AccountantApp.exception.IllegalJournalEntryException;
 
+/**
+ * This class implements the methods of Database interface for a Mongo database
+ * 
+ * @author Matteo Ghera
+ * @author Lorenzo Escriva
+ *
+ */
 public class MongoDatabaseWrapper implements Database {
 
 	private DBCollection accountingRecords;
 	private static final Logger LOGGER = Logger.getLogger(AccountantApp.class);
-
+	
+	/**
+	 * Creates a new MongoDatabaseWrapper with the MongoClient's object given
+	 * @param the MongoClient's object
+	 */
 	public MongoDatabaseWrapper(MongoClient mongoClient) {
 		DB db = mongoClient.getDB("AccountingDB");
 		accountingRecords = db.getCollection("Accounting");
 	}
 
+	/**
+	 * Adds a new journal entry description. This description is made by a number of records as the length
+	 * of count's list associated at this JournalEntry's object. The format of records is:
+	 * |   id|   date|   description|   value|   isLeft|
+	 * where the fields id and date contain the informations contain in this JournalEntry's object, for all Count's objects
+	 * in the list and the fields description, value, isLeft contain the informations contain in the correspondent Count's object  
+	 * @param the new Journal Entry to add
+	 */
 	@Override
 	public void add(JournalEntry newEntry) {
 		Iterator<BasicDBObject> records = newEntry.toListOfBasicDBObject().iterator();
@@ -39,12 +58,21 @@ public class MongoDatabaseWrapper implements Database {
 		}
 	}
 
+	/**
+	 * Changes the records matching at the id with records of JournalEntry changeEntry
+	 * @param the id of record to change
+	 * @param the JournalEntry substitute
+	 */
 	@Override
 	public void modify(String id, JournalEntry changeEntry) {
 		delete(id);
 		add(changeEntry);
 	}
-
+	
+	/**
+	 * Deletes the record with id
+	 * @param id
+	 */
 	@Override
 	public void delete(String id) {
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -54,7 +82,14 @@ public class MongoDatabaseWrapper implements Database {
 			find = accountingRecords.findAndRemove(searchQuery);
 		} while (find != null);
 	}
-
+	
+	/**
+	 * Takes the list of all journal entries between two dates
+	 * 
+	 * @param fist date
+	 * @param second date
+	 * @return the list of journal entries
+	 */
 	@Override
 	public List<JournalEntry> getAllRegistration(Date date1, Date date2) {
 		List<JournalEntry> listOfJournalEntry = getAllRegistration();
